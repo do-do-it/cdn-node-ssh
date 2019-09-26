@@ -1,6 +1,7 @@
 const { join } = require('path')
 const getFile = require('./getFile')
 const node_ssh = require('node-ssh')
+const pkg = require('../package.json')
 const ssh = new node_ssh()
 const chalk = require('chalk')
 const ProgressBar = require('progress')
@@ -19,7 +20,7 @@ module.exports = class AutoUpload {
       username: 'root',
       privateKey: '/Users/zhangmin/.ssh/id_rsa'
     }).then(async () => {
-      log(chalk.green('\n  Connect success\n'))
+      log(chalk.green(`\n  Connect success, Version ${pkg.version}\n`))
       let count = 0
       const files = getFile(this.dir)
       const startTime = new Date() * 1
