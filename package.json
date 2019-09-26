@@ -1,0 +1,17 @@
+{
+  "name": "cdn-node-ssh",
+  "version": "1.0.0",
+  "main": "src/app.js",
+  "repository": "git@github.com:do-do-it/cdn-node-ssh.git",
+  "author": "<zm@tuia.cn>",
+  "license": "MIT",
+  "scripts": {
+    "test1": "node src/test1.js",
+    "test2": "node src/test2.js"
+  },
+  "dependencies": {
+    "chalk": "^2.4.2",
+    "node-ssh": "^6.0.0",
+    "progress": "^2.0.3"
+  }
+}
