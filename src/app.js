@@ -36,7 +36,7 @@ module.exports = class AutoUpload {
       })
       const target = []
       files.forEach(local => {
-        const remote = `/srv/cdn-node/public${local.match(new RegExp(`${this.dir}(.+)`))[1]}`
+        const remote = `/srv/cdn/public${local.match(new RegExp(`${this.dir}(.+)`))[1]}`
         ssh.putFile(local, remote).then(() => {
           count++
           bar.tick()
