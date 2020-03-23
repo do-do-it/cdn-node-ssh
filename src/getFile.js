@@ -6,10 +6,10 @@ function readDir(filepath) {
   const dirs = fs.readdirSync(filepath)
   dirs.forEach(ele => {
     const stats = fs.statSync(`${filepath}/${ele}`)
-    if (stats.isDirectory()) {
+    if (stats.isDirectory() && !ele.startsWith('.')) {
       readDir(`${filepath}/${ele}`)
     } else {
-      if (!`${filepath}/${ele}`.startsWith('.')) {
+      if (!ele.startsWith('.')) {
         fileArr.push(`${filepath}/${ele}`)
       }
     }
