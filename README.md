@@ -1,18 +1,22 @@
 # cnd-node-ssh
 
-上传资源到CDN服务器
+上传资源文件到Linux服务器
 
-## Project setup
+## Installation
 ```
-yarn install
-```
-
-### for development
-```
-nodemon src/app.js
+npm install @minjs/cdn-node-ssh
 ```
 
-### for production
+## Useage
 ```
-pm2 start src/app.js
+const AutoUpload = require('@minjs/cdn-node-ssh')
+
+const upload = new AutoUpload({
+  host: '0.0.0.0',
+  username: 'root',
+  privateKey: '/.ssh/id_rsa',
+  dir: 'dist'
+})
+
+upload.start()
 ```
