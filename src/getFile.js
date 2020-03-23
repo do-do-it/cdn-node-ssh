@@ -9,7 +9,9 @@ function readDir(filepath) {
     if (stats.isDirectory()) {
       readDir(`${filepath}/${ele}`)
     } else {
-      fileArr.push(`${filepath}/${ele}`)
+      if (!`${filepath}/${ele}`.startsWith('.')) {
+        fileArr.push(`${filepath}/${ele}`)
+      }
     }
   })
 }

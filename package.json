@@ -12,8 +12,7 @@
   "author": "zhangmin 303890562@qq.com",
   "license": "MIT",
   "scripts": {
-    "test1": "node src/test1.js",
-    "test2": "node src/test2.js"
+    "test": "node test/main.js"
   },
   "keywords": [
     "@minjs",
