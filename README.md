@@ -15,7 +15,7 @@ const upload = new AutoUpload({
   host: '0.0.0.0',
   username: 'root',
   privateKey: '/.ssh/id_rsa',
-  dir: 'dist',
+  local: 'dist',
   remote: '/srv/www'
 })
 

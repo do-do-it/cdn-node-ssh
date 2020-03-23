@@ -38,18 +38,27 @@ module.exports = class AutoUpload {
           console.log(chalk.blue(`\n  本次队列文件共${files.length}个，上传文件${count}个，消耗时间：${parseFloat((new Date() * 1 - startTime) / 1000)} s\n`))
         }
       })
-      files.forEach(local => {
-        const remote = `${this.remote}${local.match(new RegExp(`${this.local}(.+)`))[1]}`
-        ssh.putFile(local, remote).then(() => {
-          count++
-          bar.tick()
-          if (count >= files.length) {
-            process.exit(0)
-          }
-        }, err => {
-          log(chalk.red(err))
+      // 异步上传
+      async function upload (local, remote) {
+        return new Promise(resolve => {
+          ssh.putFile(local, remote).then(() => {
+            count++
+            bar.tick()
+            resolve()
+          }, err => {
+            resolve(err)
+          })
         })
-      })
+        
+      }
+      // 递归
+      while (files.length) {
+        const local = files.pop()
+        const remote = `${this.remote}${local.match(new RegExp(`${this.local}(.+)`))[1]}`
+        await upload(local, remote)
+      }
+      // 退出
+      process.exit(0)
     }).catch(err => {
       log(chalk.red(err))
       process.exit(0)
