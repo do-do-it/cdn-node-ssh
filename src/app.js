@@ -8,13 +8,14 @@ const ProgressBar = require('progress')
 const log = console.log
 
 module.exports = class AutoUpload {
-  constructor({ dir = 'dist', host, username, privateKey }) {
-    this.dir = dir
+  constructor({ local = 'dist', host, username, privateKey, remote }) {
+    this.local = local
+    this.remote = remote
     this.host = host
     this.username = username
     this.privateKey = privateKey
-    if (!dir.match(/^\/.+/)) {
-      this.dir = join(process.cwd(), dir)
+    if (!local.match(/^\/.+/)) {
+      this.local = join(process.cwd(), local)
     }
   }
   start() {
@@ -25,7 +26,7 @@ module.exports = class AutoUpload {
     }).then(async () => {
       log(chalk.green(`\n  Connect success, Version ${pkg.version}\n`))
       let count = 0
-      const files = getFile(this.dir)
+      const files = getFile(this.local)
       const startTime = new Date() * 1
       const bar = new ProgressBar(chalk.yellow(`  文件上传中 [:bar] :current/${files.length} :percent :elapseds`), {
         complete: '●',
@@ -38,7 +39,7 @@ module.exports = class AutoUpload {
         }
       })
       files.forEach(local => {
-        const remote = `/srv/cdn/public${local.match(new RegExp(`${this.dir}(.+)`))[1]}`
+        const remote = `${this.remote}${local.match(new RegExp(`${this.local}(.+)`))[1]}`
         ssh.putFile(local, remote).then(() => {
           count++
           bar.tick()
